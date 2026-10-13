@@ -39,7 +39,7 @@ export default function PortalBio() {
       {/* Jejak: portal ini bagian dari PintuWeb */}
       <nav aria-label="Jejak" className="bg-ink text-kertas text-xs">
         <ol className="mx-auto flex max-w-7xl px-4 sm:px-6 lg:px-8 items-center gap-2 py-1.5">
-          <li><a href="https://www.pintuweb.com" className="font-semibold underline-offset-4 hover:underline">PintuWeb</a></li>
+          <li><a href="https://www.pintuweb.id" className="font-semibold underline-offset-4 hover:underline">PintuWeb</a></li>
           <li aria-hidden="true" className="opacity-60">/</li>
           <li aria-current="page">Link in Bio</li>
         </ol>
@@ -294,7 +294,7 @@ export default function PortalBio() {
             <p className="font-display text-xs font-bold uppercase tracking-widest text-kuningx">Hubungi</p>
             <ul className="mt-3 space-y-2">
               <li><a href={WA} target="_blank" rel="noopener noreferrer" className="transition hover:text-kertas">WhatsApp +62 851 9093 1399</a></li>
-              <li><a href="https://www.pintuweb.com" className="transition hover:text-kertas">pintuweb.com</a></li>
+              <li><a href="https://www.pintuweb.id" className="transition hover:text-kertas">pintuweb.id</a></li>
             </ul>
           </div>
         </div>

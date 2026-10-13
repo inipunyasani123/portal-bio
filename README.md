@@ -2,7 +2,7 @@
 
 PortalBio: 12 template link in bio dengan karakter unik — untuk kreator, musisi, bisnis, hingga developer.
 
-**Demo live:** https://www.pintuweb.com/link-in-bio
+**Demo live:** https://www.pintuweb.id/link-in-bio
 
 ![Tangkapan layar PortalBio](public/og.jpg)
 
@@ -52,4 +52,4 @@ Buka http://localhost:3000. Untuk build produksi: `npm run build` lalu `npm star
 
 ---
 
-Dibuat oleh [PintuWeb](https://www.pintuweb.com), jasa pembuatan website.
+Dibuat oleh [PintuWeb](https://www.pintuweb.id), jasa pembuatan website.
