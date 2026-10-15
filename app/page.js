@@ -4,28 +4,29 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AtSign, ArrowDown, ArrowUpRight, MessageCircle, MousePointerClick, Rocket, Link2, Palette, Smartphone, BarChart3, ChevronDown } from 'lucide-react';
 import { templates } from './components/templates-data';
+import { LANJUT, GALERI_LAIN, PINTUWEB } from './components/pintuweb';
 
-const WA = 'https://wa.me/6285190931399?text=Halo%2C%20saya%20tertarik%20template%20link%20in%20bio%20di%20PortalBio';
+const WA = 'https://wa.me/6285190931399?text=Halo%2C%20saya%20tertarik%20template%20link%20in%20bio%20di%20PintuWeb';
 
 const KENAPA = [
   { icon: Link2, title: 'Satu link untuk semua', desc: 'IG, TikTok, YouTube, toko, portofolio — muat semuanya tanpa ganti-ganti bio.' },
   { icon: Palette, title: 'Karakter, bukan template polos', desc: 'Terminal hacker, kaset mixtape, kartu pos — bio-mu ikut bercerita.' },
   { icon: Smartphone, title: 'Kencang di ponsel', desc: 'Dibangun ringan; kebuka dalam sekejap bahkan di sinyal pas-pasan.' },
-  { icon: BarChart3, title: 'Milikmu selamanya', desc: 'Bukan sewa platform — file & tautan jadi milikmu penuh, bebas biaya bulanan.' },
+  { icon: BarChart3, title: 'Milikmu sendiri', desc: 'Bukan sewa platform: setelah pelunasan, desain dan domainnya milikmu, tanpa biaya bulanan. Domain & hosting termasuk tahun pertama, lalu sekitar Rp100–150 ribu per tahun.' },
 ];
 
 const TANYA = [
-  { q: 'Apa bedanya dengan Linktree gratisan?', a: 'Linktree membuat semua orang tampak sama. Di sini bio-mu punya kepribadian — desain khusus yang mengikuti gayamu, tanpa logo pihak ketiga, tanpa batasan fitur, dan tanpa biaya langganan bulanan.' },
+  { q: 'Apa bedanya dengan Linktree gratisan?', a: 'Linktree membuat semua orang tampak sama. Di sini bio-mu punya kepribadian — desain khusus yang mengikuti gayamu, domain sendiri, satu fitur khusus seperti menu atau pre-order, tanpa logo pihak ketiga, dan tanpa biaya langganan bulanan.' },
   { q: 'Bisakah warna dan isinya diganti sesuai brand-ku?', a: 'Bisa, semuanya: warna, foto, urutan tautan, ikon sosial, sampai teks sapaan. Template hanyalah titik awal — hasil akhirnya 100% kamu.' },
   { q: 'Berapa lama sampai bisa dipakai?', a: 'Biasanya 1–2 hari kerja setelah isi tautan dan foto lengkap. Setelah online, link langsung bisa kamu pasang di bio Instagram, TikTok, atau WhatsApp.' },
   { q: 'Berapa biayanya?', a: 'Paket Link in Bio PintuWeb Rp125 ribu–Rp375 ribu untuk satu halaman dengan satu fitur khusus (menu, pre-order, jadwal, atau katalog), sudah termasuk domain .my.id/.biz.id dan hosting tahun pertama. Perpanjangan mulai tahun kedua sekitar Rp100–150 ribu per tahun.' },
-  { q: 'Apakah bisa menambah tautan sendiri nanti?', a: 'Bisa. Kamu mendapat akses penuh, plus panduan singkat cara menambah atau mengubah tautan. Kalau sibuk, kirim WhatsApp saja — kami bantu ubah gratis.' },
+  { q: 'Apakah bisa menambah tautan sendiri nanti?', a: 'Bisa. Setelah pelunasan kamu mendapat akses penuh, plus panduan singkat cara menambah atau mengubah tautan. Kalau sibuk, kirim perubahannya lewat WhatsApp dan kami bantu ubahkan.' },
 ];
 
 const LANGKAH = [
   { icon: MousePointerClick, no: '01', title: 'Pilih karaktermu', desc: 'Jelajahi 12 template — dari terminal hacker sampai papan menu warung.' },
   { icon: MessageCircle, no: '02', title: 'Chat via WhatsApp', desc: 'Kirim nama template + isi link-mu. Kami sesuaikan warna & kontennya.' },
-  { icon: Rocket, no: '03', title: 'Online dalam sehari', desc: 'Link siap dibagikan di Instagram, TikTok, dan semua bio-mu.' },
+  { icon: Rocket, no: '03', title: 'Online dalam 1–2 hari kerja', desc: 'Setelah isi lengkap, link siap dibagikan di Instagram, TikTok, dan semua bio-mu.' },
 ];
 
 export default function PortalBio() {
@@ -49,7 +50,10 @@ export default function PortalBio() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#top" className="flex items-center gap-2 font-display text-lg font-extrabold">
             <span className="grid h-9 w-9 place-items-center rounded-xl border-2 border-ink bg-ungu text-white shadow-[3px_3px_0_var(--color-ink)]"><AtSign size={18} /></span>
-            PortalBio
+            <span className="flex flex-col leading-none">
+              PintuWeb{' '}
+              <span className="mt-1 font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-ungu">Link in Bio</span>
+            </span>
           </a>
           <div className="hidden items-center gap-6 text-sm font-bold text-ink/60 md:flex" role="navigation" aria-label="Navigasi">
             <a href="#templates" className="transition hover:text-ungu">Koleksi</a>
@@ -277,7 +281,10 @@ export default function PortalBio() {
           <div>
             <p className="flex items-center justify-center gap-2 font-display text-lg font-extrabold text-kertas sm:justify-start">
               <span className="grid h-8 w-8 place-items-center rounded-lg border-2 border-kertas/30 bg-ungu text-white"><AtSign size={15} /></span>
-              PortalBio
+              <span className="flex flex-col text-left leading-none">
+                PintuWeb{' '}
+                <span className="mt-1 font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-kuningx">Link in Bio</span>
+              </span>
             </p>
             <p className="mt-2 text-sm leading-relaxed">12 template link-in-bio dengan karakter — untuk kreator, musisi, bisnis, dan developer.</p>
           </div>
@@ -298,8 +305,29 @@ export default function PortalBio() {
             </ul>
           </div>
         </div>
-        <p className="mt-10 border-t border-kertas/10 pt-5 text-center text-xs text-kertas/65">
-          © {new Date().getFullYear()} PortalBio · bagian dari PintuWeb — 12 template, satu kamu.
+        {/* Lanjut di PintuWeb: harga, layanan, semua demo, dan galeri lain di situs utama */}
+        <nav aria-labelledby="lanjut-pintuweb" className="mx-auto mt-10 max-w-7xl border-t border-kertas/10 pt-8 text-center text-sm sm:text-left">
+          <p id="lanjut-pintuweb" className="font-display text-xs font-bold uppercase tracking-widest text-kuningx">Lanjut di PintuWeb</p>
+          <ul className="mt-4 flex flex-wrap justify-center gap-3 sm:justify-start">
+            {LANJUT.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} className="inline-flex items-center gap-1.5 rounded-full border-2 border-kertas/30 px-4 py-1.5 text-xs font-bold text-kertas transition hover:border-kuningx hover:bg-kuningx hover:text-ink">
+                  {l.label} <ArrowUpRight size={13} aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-xs font-bold uppercase tracking-widest text-kertas/60">Galeri lain</p>
+          <ul className="mt-2 flex flex-wrap justify-center gap-x-5 gap-y-2 sm:justify-start">
+            {GALERI_LAIN.map((g) => (
+              <li key={g.path}>
+                <a href={`${PINTUWEB}/${g.path}`} className="underline decoration-kertas/25 underline-offset-4 transition hover:text-kertas hover:decoration-kuningx">{g.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <p className="mx-auto mt-8 max-w-7xl border-t border-kertas/10 pt-5 text-center text-xs text-kertas/65">
+          © {new Date().getFullYear()} PintuWeb · Galeri Link in Bio — 12 template, satu kamu.
         </p>
       </footer>
     </div>
