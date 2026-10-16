@@ -38,7 +38,7 @@ Katalog template link-in-bio. Neo-pop dengan font Unbounded, kartu berbingkai po
 - JavaScript
 - Framer Motion, Lucide (ikon)
 - Font: Unbounded, Inter (next/font)
-- Pratinjau 4:5 tiap varian ditangkap dari demo live di lebar ponsel (1 Okt 2026), `public/images/bio/`
+- Pratinjau 4:5 tiap varian ditangkap dari demo live di lebar ponsel (16 Okt 2026), `public/images/bio/`; setelah mengganti gambar, buat ulang variannya dengan `node scripts/gambar-varian.mjs`
 - SEO: metadata per halaman, Open Graph, JSON-LD, sitemap.xml, dan robots.txt
 
 ## Menjalankan secara lokal
