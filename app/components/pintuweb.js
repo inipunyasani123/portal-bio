@@ -2,6 +2,23 @@
 // semua tautan ke situs utama memakai URL absolut dan <a> biasa: next/link akan menempelkan basePath.
 export const PINTUWEB = 'https://www.pintuweb.id';
 
+/** Kontak dari PintuWeb/app/lib/site.ts (WA_NUMBER, WA_DISPLAY). Ganti di sana = ganti di sini. */
+export const WA_NUMBER = '6285190931399';
+export const WA_DISPLAY = '+62 851 9093 1399';
+export const wa = (teks) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(teks)}`;
+
+/**
+ * Angka paket "link-in-bio" dari PintuWeb/app/lib/packages.ts (harga, waktu) dan RENEWAL_BIO_PER_YEAR.
+ * Satu-satunya tempat angka bisnis di portal ini: hero, kartu, dan FAQ mengambil dari sini.
+ */
+export const PAKET = {
+  nama: 'Link in Bio',
+  mulai: 'Rp125 ribu',
+  sampai: 'Rp375 ribu',
+  waktu: '1–2 hari kerja',
+  perpanjangan: 'Rp100–150 ribu per tahun',
+};
+
 /** Delapan galeri yang tayang di www.pintuweb.id/<path> (lihat lib/portals.ts di PintuWeb). */
 export const GALERI = [
   { path: 'landing-page', label: 'Landing Page' },

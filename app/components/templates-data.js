@@ -14,3 +14,6 @@ export const templates = [
   { url: "https://linkinbio-jajan.pintuweb.id", name: "Jajan", terjual: 3, description: "Papan menu warung — buka/tutup menurut jam WIB, menu lengkap, dan PO acara dengan minimal H-2.", halaman: ["/menu", "/pesan"], image: "/link-in-bio/images/bio/jajan.webp", category: "Bisnis", tags: ["Kuliner", "UMKM", "PO"] },
   { url: "https://linkinbio-kaset.pintuweb.id", name: "Kaset", terjual: 0, description: "Mixtape analog untuk radio komunitas — siaran berikutnya dihitung otomatis dan arsip bertracklist.", halaman: ["/siaran", "/mixtape"], image: "/link-in-bio/images/bio/kaset.webp", category: "Musik", tags: ["Analog", "Radio", "Jadwal"] },
 ];
+
+/** "https://linkinbio-nova.pintuweb.id" -> "nova" (sama dengan slug demo di PintuWeb/app/lib/demos.ts). */
+export const slugOf = (t) => new URL(t.url).hostname.split('.')[0].replace(/^linkinbio-/, '');

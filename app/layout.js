@@ -1,16 +1,31 @@
 import './globals.css';
-import { Unbounded, Inter } from 'next/font/google';
-import { templates } from './components/templates-data';
+import { Unbounded } from 'next/font/google';
+import { templates, slugOf } from './components/templates-data';
 
 const unbounded = Unbounded({ subsets: ['latin'], variable: '--font-unbounded', weight: ['400', '600', '800'] });
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 // Merek di hasil pencarian & pratinjau tautan = PintuWeb. Jumlah demo dihitung dari data, bukan ditulis tangan.
 const URL_PORTAL = 'https://www.pintuweb.id/link-in-bio';
 const TITLE = `Contoh Link in Bio: ${templates.length} Demo Siap Coba | PintuWeb`;
 const DESCRIPTION = `${templates.length} contoh halaman link in bio dengan karakter berbeda untuk kreator, musisi, kafe, hingga developer. Semua demo bisa dibuka dan dicoba langsung.`;
 
-const __jsonld = {"@context":"https://schema.org","@type":"CollectionPage","name":TITLE,"description":DESCRIPTION,"url":URL_PORTAL,"inLanguage":"id-ID","isPartOf":{"@type":"WebSite","name":"PintuWeb","url":"https://www.pintuweb.id"},"publisher":{"@type":"Organization","name":"PintuWeb","url":"https://www.pintuweb.id"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"PintuWeb","item":"https://www.pintuweb.id"},{"@type":"ListItem","position":2,"name":"Link in Bio","item":URL_PORTAL}]}};
+// CollectionPage + daftar demonya (ItemList) + jejak. Data dari templates-data, jadi ikut bertambah sendiri.
+const __jsonld = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: TITLE,
+  description: DESCRIPTION,
+  url: URL_PORTAL,
+  inLanguage: "id-ID",
+  isPartOf: { "@type": "WebSite", name: "PintuWeb", url: "https://www.pintuweb.id" },
+  publisher: { "@type": "Organization", name: "PintuWeb", url: "https://www.pintuweb.id" },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: templates.length,
+    itemListElement: templates.map((t, i) => ({ "@type": "ListItem", position: i + 1, name: `${t.name} (@${slugOf(t)})`, url: t.url })),
+  },
+  breadcrumb: { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "PintuWeb", item: "https://www.pintuweb.id" }, { "@type": "ListItem", position: 2, name: "Link in Bio", item: URL_PORTAL }] },
+};
 
 export const metadata = {
   metadataBase: new URL(URL_PORTAL),
@@ -46,11 +61,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${unbounded.variable} ${inter.variable}`}>
+    <html lang="id" className={unbounded.variable}>
       <body className="antialiased">
-        <main>{children}</main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(__jsonld) }} />
-        </body>
+        {children}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(__jsonld) }} />
+      </body>
     </html>
   );
 }

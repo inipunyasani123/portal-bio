@@ -2,13 +2,14 @@
 
 @theme {
   --font-display: var(--font-unbounded), system-ui, sans-serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  /* Teks badan: tumpukan font sistem gaya Apple, sama dengan situs utama PintuWeb (tanpa unduhan font) */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   --color-kertas: #faf7f2;
   --color-ink: #191423;
   --color-ungu: #5b3df5;
   --color-kuningx: #ffc233;
-  --color-mutedx: #6f6880;
+  --color-mutedx: #625b72;
 }
 
 html { scroll-behavior: smooth; }
@@ -18,24 +19,43 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  overscroll-behavior-y: contain;
 }
 
 h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
 
+/* Tautan lompat ke konten: tersembunyi sampai difokus papan ketik */
+.lewati {
+  position: fixed; left: 1rem; top: 0.75rem; z-index: 60; transform: translateY(-160%);
+  border: 2px solid var(--color-ink); border-radius: 9999px; background: var(--color-kuningx); color: var(--color-ink);
+  padding: 0.5rem 1rem; font-weight: 700; font-size: 0.875rem; box-shadow: 3px 3px 0 var(--color-ink);
+}
+.lewati:focus { transform: none; }
+main:focus { outline: none; }
+
 /* Bingkai ponsel — motif khas portal link-in-bio */
 .phone {
   border: 3px solid var(--color-ink);
-  border-radius: 2rem;
-  box-shadow: 8px 8px 0 rgba(25, 20, 35, 0.9);
+  border-radius: 1.6rem;
+  box-shadow: 6px 6px 0 rgba(25, 20, 35, 0.9);
   background: var(--color-ink);
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s;
 }
+@media (min-width: 640px) { .phone { border-radius: 2rem; box-shadow: 8px 8px 0 rgba(25, 20, 35, 0.9); } }
 .group:hover .phone { transform: translateY(-6px) rotate(-1deg); box-shadow: 12px 14px 0 rgba(91, 61, 245, 0.35); }
+
+/* Satu tautan per kartu: ::after menutupi kartu, cincin fokusnya digambar di seluruh kartu */
+.tautan-kartu:focus-visible { outline: none; }
+.tautan-kartu:focus-visible::after { outline: 3px solid var(--color-ungu); outline-offset: 6px; }
 
 /* Marquee handle */
 @keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .animate-marquee-x { animation: marquee-x 28s linear infinite; }
+.marquee:hover .animate-marquee-x { animation-play-state: paused; }
+
+/* Masuk halus untuk elemen pendukung hero (judul tetap langsung tampil demi LCP) */
+@keyframes naik { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.naik { animation: naik 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.naik-2 { animation-delay: 0.12s; }
 
 /* Titik-titik halftone di hero */
 .dots-bg {
@@ -43,7 +63,21 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
   background-size: 22px 22px;
 }
 
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+/* FAQ <details>: buka-tutup halus di peramban yang mendukung */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  .tanya::details-content { height: 0; overflow: clip; transition: height 0.3s ease, content-visibility 0.3s allow-discrete; }
+  .tanya[open]::details-content { height: auto; }
+}
 
-:focus-visible { outline: 3px solid var(--color-ungu); outline-offset: 3px; border-radius: 12px; }
+/* Kartu yang berpindah saat disaring (View Transitions) */
+::view-transition-group(*) { animation-duration: 0.35s; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+
+:focus-visible { outline: 3px solid var(--color-ungu); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .animate-marquee-x { animation: none !important; }
+  .group:hover .phone { transform: none; }
+}
