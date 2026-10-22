@@ -13,8 +13,8 @@ export const wa = (teks) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponen
  */
 export const PAKET = {
   nama: 'Link in Bio',
-  mulai: 'Rp125 ribu',
-  sampai: 'Rp375 ribu',
+  mulai: 'Rp100 ribu',
+  sampai: 'Rp300 ribu',
   waktu: '1–2 hari kerja',
   perpanjangan: 'Rp100–150 ribu per tahun',
 };
