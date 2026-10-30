@@ -9,24 +9,25 @@ const WA = wa(`Halo PintuWeb, saya tertarik ${JENIS}. Boleh minta info?`);
 const N = templates.length;
 
 const KENAPA = [
-  { icon: Link2, title: 'Satu link untuk semua', desc: 'IG, TikTok, YouTube, toko, portofolio — muat semuanya tanpa ganti-ganti bio.' },
-  { icon: Palette, title: 'Karakter, bukan template polos', desc: 'Terminal hacker, kaset mixtape, kartu pos — bio-mu ikut bercerita.' },
-  { icon: Smartphone, title: 'Kencang di ponsel', desc: 'Dibangun ringan; kebuka dalam sekejap bahkan di sinyal pas-pasan.' },
-  { icon: BadgeCheck, title: 'Milikmu sendiri', desc: `Bukan sewa platform: setelah pelunasan, desain dan domainnya milikmu, tanpa biaya bulanan. Domain & hosting termasuk tahun pertama, lalu sekitar ${PAKET.perpanjangan}.` },
+  { icon: Link2, title: 'Satu link untuk semua', desc: 'Instagram, TikTok, toko, dan portofolio ada di satu tempat.' },
+  { icon: Palette, title: 'Gaya yang beda', desc: 'Bukan tampilan polos. Pilih yang cocok dengan karaktermu.' },
+  { icon: Smartphone, title: 'Enak dibuka di HP', desc: 'Ringan, jadi cepat terbuka walau sinyal kecil.' },
+  { icon: BadgeCheck, title: 'Milikmu sendiri', desc: `Tanpa langganan bulanan. Domain dan hosting tahun pertama sudah termasuk, lalu sekitar ${PAKET.perpanjangan}.` },
 ];
 
 const LANGKAH = [
-  { icon: MousePointerClick, no: '01', title: 'Pilih karaktermu', desc: `Jelajahi ${N} template — dari terminal hacker sampai papan menu warung.` },
-  { icon: MessageCircle, no: '02', title: 'Chat via WhatsApp', desc: 'Kirim nama template + isi link-mu. Kami sesuaikan warna & kontennya.' },
-  { icon: Rocket, no: '03', title: `Online dalam ${PAKET.waktu}`, desc: 'Setelah isi lengkap, link siap dibagikan di Instagram, TikTok, dan semua bio-mu.' },
+  { icon: MousePointerClick, no: '01', title: 'Pilih contoh', desc: `Lihat ${N} contoh, pilih yang paling cocok.` },
+  { icon: MessageCircle, no: '02', title: 'Chat via WhatsApp', desc: 'Kirim nama contoh dan isi link-mu.' },
+  { icon: Rocket, no: '03', title: `Online dalam ${PAKET.waktu}`, desc: 'Link siap kamu pasang di bio Instagram dan TikTok.' },
 ];
 
 const TANYA = [
-  { q: 'Apa bedanya dengan Linktree gratisan?', a: 'Linktree membuat semua orang tampak sama. Di sini bio-mu punya kepribadian — desain khusus yang mengikuti gayamu, domain sendiri, satu fitur khusus seperti menu atau pre-order, tanpa logo pihak ketiga, dan tanpa biaya langganan bulanan.' },
-  { q: 'Bisakah warna dan isinya diganti sesuai brand-ku?', a: 'Bisa, semuanya: warna, foto, urutan tautan, ikon sosial, sampai teks sapaan. Template hanyalah titik awal — hasil akhirnya 100% kamu.' },
-  { q: 'Berapa lama sampai bisa dipakai?', a: `Biasanya ${PAKET.waktu} setelah isi tautan dan foto lengkap. Setelah online, link langsung bisa kamu pasang di bio Instagram, TikTok, atau WhatsApp.` },
-  { q: 'Berapa biayanya?', a: `Paket Link in Bio PintuWeb ${PAKET.mulai}–${PAKET.sampai} untuk satu halaman dengan satu fitur khusus (menu, pre-order, jadwal, atau katalog), sudah termasuk domain .my.id/.biz.id dan hosting tahun pertama. Perpanjangan mulai tahun kedua sekitar ${PAKET.perpanjangan}.` },
-  { q: 'Apakah bisa menambah tautan sendiri nanti?', a: 'Bisa. Setelah pelunasan kamu mendapat akses penuh, plus panduan singkat cara menambah atau mengubah tautan. Kalau sibuk, kirim perubahannya lewat WhatsApp dan kami bantu ubahkan.' },
+  { q: 'Apa itu link in bio?', a: 'Satu halaman berisi semua tautanmu, seperti Instagram, toko, dan menu. Kamu pasang satu link itu di bio Instagram atau TikTok.' },
+  { q: 'Apa bedanya dengan Linktree gratis?', a: 'Desainnya dibuat sesuai gayamu, pakai domain sendiri, dan tanpa langganan bulanan. Tidak ada logo pihak lain.' },
+  { q: 'Warna dan isinya bisa diganti?', a: 'Bisa. Warna, foto, urutan tautan, dan teks sapaan kami sesuaikan dengan usahamu.' },
+  { q: 'Berapa lama pembuatannya?', a: `Biasanya ${PAKET.waktu} setelah isi tautan dan foto lengkap.` },
+  { q: 'Berapa biayanya?', a: `${PAKET.mulai}–${PAKET.sampai} per halaman. Domain dan hosting tahun pertama sudah termasuk, lalu sekitar ${PAKET.perpanjangan}.` },
+  { q: 'Bisa menambah tautan nanti?', a: 'Bisa. Kamu dapat panduan singkat, atau kirim perubahannya lewat WhatsApp dan kami ubahkan.' },
 ];
 
 const FAQ_LD = {
@@ -76,7 +77,7 @@ export default function PortalBio() {
             <Logo />
           </a>
           <nav aria-label="Navigasi halaman" className="hidden items-center gap-6 text-sm font-bold text-ink/70 md:flex">
-            <a href="#templates" className="transition hover:text-ungu">Koleksi</a>
+            <a href="#templates" className="transition hover:text-ungu">Contoh</a>
             <a href="#kenapa" className="transition hover:text-ungu">Kenapa</a>
             <a href="#cara" className="transition hover:text-ungu">Cara Pesan</a>
             <a href="#tanya" className="transition hover:text-ungu">FAQ</a>
@@ -92,17 +93,17 @@ export default function PortalBio() {
         <section id="hero" className="dots-bg relative overflow-hidden px-4 pb-8 pt-7 text-center sm:px-6 sm:pb-14 sm:pt-16">
           <div className="relative mx-auto max-w-4xl">
             <span className="naik hidden items-center gap-2 sm:inline-flex rounded-full border-2 border-ink bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)]">
-              ✦ {N} template · {N} kepribadian
+              ✦ {N} contoh · {N} gaya
             </span>
             <h1 className="font-display text-[2rem] font-extrabold leading-[1.05] min-[400px]:text-4xl sm:mt-7 sm:text-6xl md:text-7xl">
               Satu link.<br />Seribu <span className="text-ungu">kepribadian</span><span className="text-kuningx">.</span>
             </h1>
-            <p className="mx-auto mt-5 hidden max-w-xl text-base text-mutedx sm:mt-6 sm:block sm:text-lg">
-              Bio-mu bukan sekadar daftar tautan. Pilih template yang berbicara seperti kamu — lalu bagikan ke dunia.
+            <p className="mx-auto mt-4 max-w-xl text-base text-mutedx sm:mt-6 sm:text-lg">
+              Link in bio adalah satu halaman berisi semua tautanmu, untuk dipasang di bio Instagram atau TikTok.
             </p>
             <div className="naik naik-2 mt-4 flex flex-col items-center gap-3 sm:mt-9 sm:gap-4">
               <a href="#templates" className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-ungu px-7 py-3 font-display text-sm font-semibold text-white shadow-[4px_4px_0_var(--color-ink)] sm:px-8 sm:py-4 transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0_var(--color-ink)]">
-                Lihat Koleksi <ArrowDown size={16} aria-hidden="true" />
+                Lihat Contoh <ArrowDown size={16} aria-hidden="true" />
               </a>
               {/* Ringkasan paket: angka dari PAKET (PintuWeb packages.ts) */}
               <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-ink/80">
@@ -152,8 +153,8 @@ export default function PortalBio() {
             <Katalog
               kepala={
                 <div>
-                  <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ungu">Koleksi</p>
-                  <h2 id="judul-koleksi" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Pilih kepribadianmu</h2>
+                  <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ungu">Contoh</p>
+                  <h2 id="judul-koleksi" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Pilih gaya yang kamu suka</h2>
                 </div>
               }
             />
@@ -165,8 +166,8 @@ export default function PortalBio() {
           <div className="mx-auto max-w-7xl">
             <div className="sm:text-center">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ungu">Kenapa perlu</p>
-              <h2 id="judul-kenapa" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Bio 150 karakter itu <span className="text-ungu">nggak cukup</span></h2>
-              <p className="mt-3 max-w-xl text-mutedx sm:mx-auto sm:mt-4">Kamu punya banyak hal untuk ditunjukkan. Link-in-bio adalah etalase mungil yang bekerja 24 jam untukmu.</p>
+              <h2 id="judul-kenapa" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Bio Instagram itu <span className="text-ungu">terbatas</span></h2>
+              <p className="mt-3 max-w-xl text-mutedx sm:mx-auto sm:mt-4">Satu link bisa memuat semua yang ingin kamu tunjukkan.</p>
             </div>
             <ul className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
               {KENAPA.map((k) => (
@@ -187,7 +188,7 @@ export default function PortalBio() {
           <div className="mx-auto max-w-7xl">
             <div className="sm:text-center">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ungu">Cara pesan</p>
-              <h2 id="judul-cara" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Tiga langkah, langsung tampil beda</h2>
+              <h2 id="judul-cara" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Tiga langkah saja</h2>
             </div>
             <ol className="mt-8 grid gap-3 sm:mt-12 sm:gap-6 md:grid-cols-3">
               {LANGKAH.map((l) => (
@@ -208,8 +209,8 @@ export default function PortalBio() {
         <section id="tanya" aria-labelledby="judul-tanya" className="scroll-mt-[60px] border-t-2 border-ink bg-kertas px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-3xl">
             <div className="sm:text-center">
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ungu">FAQ</p>
-              <h2 id="judul-tanya" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Yang sering <span className="text-ungu">ditanyain</span></h2>
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ungu">Tanya jawab</p>
+              <h2 id="judul-tanya" className="mt-2 font-display text-3xl font-extrabold md:text-4xl">Yang sering <span className="text-ungu">ditanyakan</span></h2>
             </div>
             <div className="mt-8 space-y-3 sm:mt-10 sm:space-y-4">
               {TANYA.map((t, i) => (
@@ -236,7 +237,7 @@ export default function PortalBio() {
             <h2 className="mt-6 font-display text-3xl font-extrabold leading-tight md:text-5xl">
               Bio-mu berhak <span className="text-kuningx">tampil beda</span>.
             </h2>
-            <p className="mx-auto mt-4 max-w-md text-kertas/75">Konsultasi gratis — ceritakan gayamu, kami rekomendasikan templatenya.</p>
+            <p className="mx-auto mt-4 max-w-md text-kertas/75">Konsultasi gratis. Ceritakan usahamu, kami bantu pilihkan contohnya.</p>
             <a href={WA} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-kuningx px-9 py-4 font-display text-sm font-semibold text-ink transition hover:scale-[1.03] active:scale-95 sm:mt-9">
               <MessageCircle size={17} aria-hidden="true" /> Chat WhatsApp
             </a>
@@ -248,13 +249,13 @@ export default function PortalBio() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
           <div className="col-span-2 sm:col-span-1">
             <p className="flex items-center gap-2 font-display text-lg font-extrabold text-kertas"><Logo kecil /></p>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed">{N} template link-in-bio dengan karakter — untuk kreator, musisi, bisnis, dan developer.</p>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed">{N} contoh link in bio untuk kreator, musisi, usaha kecil, dan developer.</p>
           </div>
           <nav aria-labelledby="kaki-jelajahi" className="text-sm">
             <p id="kaki-jelajahi" className="font-display text-xs font-bold uppercase tracking-widest text-kuningx">Jelajahi</p>
             <ul className="mt-3 space-y-1">
-              <li><a href="#templates" className="inline-block py-1 transition hover:text-kertas">Koleksi Template</a></li>
-              <li><a href="#kenapa" className="inline-block py-1 transition hover:text-kertas">Kenapa Link-in-Bio</a></li>
+              <li><a href="#templates" className="inline-block py-1 transition hover:text-kertas">Contoh</a></li>
+              <li><a href="#kenapa" className="inline-block py-1 transition hover:text-kertas">Kenapa Link in Bio</a></li>
               <li><a href="#cara" className="inline-block py-1 transition hover:text-kertas">Cara Pesan</a></li>
               <li><a href="#tanya" className="inline-block py-1 transition hover:text-kertas">FAQ</a></li>
             </ul>
@@ -297,7 +298,7 @@ export default function PortalBio() {
           </ul>
         </nav>
         <p className="mx-auto mt-8 max-w-7xl border-t border-kertas/10 pt-5 text-xs text-kertas/70 sm:text-center">
-          © {new Date().getFullYear()} PintuWeb · Galeri Link in Bio — {N} template, satu kamu.
+          © {new Date().getFullYear()} PintuWeb · Galeri Link in Bio · {N} contoh.
         </p>
       </footer>
       <BilahAksi wa={WA} />

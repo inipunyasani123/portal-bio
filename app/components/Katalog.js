@@ -10,9 +10,9 @@ const KATEGORI = ['Semua', ...new Set(templates.map((t) => t.category))];
 const USAHA = [
   { nama: 'Semua', ikon: LayoutGrid },
   { nama: 'Kuliner', ikon: Utensils },
-  { nama: 'Jasa & Profesional', ikon: Briefcase },
-  { nama: 'Kreator & Personal', ikon: Sparkles },
-  { nama: 'Musik & Hiburan', ikon: Music },
+  { nama: 'Jasa', ikon: Briefcase },
+  { nama: 'Kreator', ikon: Sparkles },
+  { nama: 'Musik', ikon: Music },
   { nama: 'Teknologi', ikon: Terminal },
 ];
 const SLUGS = templates.map(slugOf);
@@ -80,7 +80,7 @@ export default function Katalog({ kepala }) {
       {/* Ponsel: tiap baris chip bisa digeser (tidak menggeser halaman); layar lebar: membungkus */}
       <div className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-3 sm:gap-4">
         <div>
-          <p id="lbl-usaha" className={`${label} mb-1.5`}>Untuk usaha apa</p>
+          <p id="lbl-usaha" className={`${label} mb-1.5`}>Untuk siapa</p>
           <div role="group" aria-labelledby="lbl-usaha" className={baris}>
             {USAHA.map(({ nama, ikon: Ikon }) => (
               <button key={nama} type="button" onClick={() => setUsaha(nama)} aria-pressed={usaha === nama} className={`${chip(usaha === nama)} inline-flex items-center gap-1.5`}>
@@ -90,7 +90,7 @@ export default function Katalog({ kepala }) {
           </div>
         </div>
         <div>
-          <p id="lbl-kat" className={`${label} mb-1.5`}>Jenis</p>
+          <p id="lbl-kat" className={`${label} mb-1.5`}>Kategori</p>
           <div role="group" aria-labelledby="lbl-kat" className={baris}>
             {KATEGORI.map((c) => (
               <button key={c} type="button" onClick={() => setCat(c)} aria-pressed={cat === c} className={chip(cat === c)}>{c}</button>
@@ -98,11 +98,11 @@ export default function Katalog({ kepala }) {
           </div>
         </div>
       </div>
-      <p className="mt-3 text-sm font-semibold text-mutedx" aria-live="polite" role="status">{list.length} dari {templates.length} template ditampilkan</p>
+      <p className="mt-3 text-sm font-semibold text-mutedx" aria-live="polite" role="status">Menampilkan {list.length} dari {templates.length} contoh</p>
 
       {list.length === 0 && (
         <div className="mt-6 rounded-3xl border-2 border-dashed border-ink/40 p-8 text-center">
-          <p className="font-display text-base font-semibold">Belum ada template untuk kombinasi itu.</p>
+          <p className="font-display text-base font-semibold">Belum ada contoh yang cocok.</p>
           <button type="button" onClick={() => { setCatRaw('Semua'); setUsahaRaw('Semua'); }} className="mt-4 min-h-10 rounded-full border-2 border-ink bg-kuningx px-5 text-sm font-bold">Tampilkan semua</button>
         </div>
       )}
@@ -122,7 +122,7 @@ export default function Katalog({ kepala }) {
                     <source media="(max-width: 767px)" srcSet={srcSet(t.potret)} sizes="(max-width: 639px) 46vw, 30vw" />
                     <Image
                       src={t.image}
-                      alt={`Tampilan template ${t.name} di ponsel`}
+                      alt={`Tampilan contoh ${t.name} di ponsel`}
                       fill
                       sizes="(max-width: 1023px) 30vw, 280px"
                       className="object-cover object-top"
@@ -136,8 +136,7 @@ export default function Katalog({ kepala }) {
                   <h3 className="font-display text-base font-semibold sm:text-xl">{t.name}</h3>
                   <span className="font-display text-[11px] text-ungu sm:text-xs">@{slug}</span>
                 </div>
-                <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-mutedx sm:mt-1.5 sm:line-clamp-none sm:text-sm sm:leading-relaxed">{t.description}</p>
-                <p className="mt-2 hidden font-mono text-[11px] text-ink/70 sm:block">/{t.halaman.map((h) => <span key={h}> · {h}</span>)}</p>
+                <p className="mt-1 text-[13px] leading-snug text-mutedx sm:mt-1.5 sm:line-clamp-none sm:text-sm sm:leading-relaxed">{t.description}</p>
                 <div className="mt-2.5 flex flex-wrap items-center gap-1.5 sm:mt-3">
                   {t.terjual > 0 && <span className="rounded-full bg-ungu px-2.5 py-1 text-[11px] font-bold text-white">{t.terjual} terjual</span>}
                   {t.tags.map((tag) => (

@@ -7,7 +7,7 @@ const unbounded = Unbounded({ subsets: ['latin'], variable: '--font-unbounded', 
 // Merek di hasil pencarian & pratinjau tautan = PintuWeb. Jumlah demo dihitung dari data, bukan ditulis tangan.
 const URL_PORTAL = 'https://www.pintuweb.id/link-in-bio';
 const TITLE = `Contoh Link in Bio: ${templates.length} Demo Siap Coba | PintuWeb`;
-const DESCRIPTION = `${templates.length} contoh halaman link in bio dengan karakter berbeda untuk kreator, musisi, kafe, hingga developer. Semua demo bisa dibuka dan dicoba langsung.`;
+const DESCRIPTION = `${templates.length} contoh link in bio: satu halaman berisi semua tautanmu, untuk bio Instagram dan TikTok. Pilih gaya, lalu coba langsung.`;
 
 // CollectionPage + daftar demonya (ItemList) + jejak. Data dari templates-data, jadi ikut bertambah sendiri.
 const __jsonld = {
