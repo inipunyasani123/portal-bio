@@ -27,6 +27,14 @@ Katalog template link-in-bio. Neo-pop dengan font Unbounded, kartu berbingkai po
 - [Vinyl](https://linkinbio-vinyl.pintuweb.id) — Musik. Piringan berputar untuk musisi — album dengan penggalan lirik, tur akustik, dan pengingat tiket. Halaman: `/`, `/album`, `/tur`.
 - [Zen](https://linkinbio-zen.pintuweb.id) — Lifestyle. Ruang teduh serif untuk coach mindfulness — kelas, retret, dan pemandu napas interaktif. Halaman: `/`, `/kelas`, `/napas`.
 
+## Tautan langsung per demo
+
+Setiap kartu punya `id` = slug demo: `nova`, `atlas`, `mellow`, `pulse`, `vendra`, `disko`, `zen`, `cipher`, `vinyl`, `arsip`, `jajan`, `kaset`. Contoh: `https://www.pintuweb.id/link-in-bio#vinyl` menggulir ke kartu Vinyl (saringan diatur ke Semua) dan menyorotnya sebentar.
+
+## Gambar
+
+Tiap demo punya `public/images/bio/<slug>.webp` (780×975, desktop) dan `<slug>-p.webp` (potret ponsel 390×844 @2x), keduanya tangkapan demo live (`scripts/potret.mjs`). Setelah mengganti gambar: `node scripts/gambar-varian.mjs`. Sumber dicatat di `public/images/SUMBER.md`.
+
 ## Halaman
 
 `/`

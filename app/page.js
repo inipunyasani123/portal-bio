@@ -1,9 +1,11 @@
 import { AtSign, ArrowDown, ArrowUpRight, MessageCircle, MousePointerClick, Rocket, Link2, Palette, Smartphone, BadgeCheck, ChevronDown } from 'lucide-react';
 import Katalog from './components/Katalog';
-import { templates } from './components/templates-data';
-import { LANJUT, GALERI_LAIN, PINTUWEB, PAKET, WA_DISPLAY, wa } from './components/pintuweb';
+import GaleriLain from './components/GaleriLain';
+import BilahAksi from './components/BilahAksi';
+import { templates, slugOf } from './components/templates-data';
+import { LANJUT, ARTIKEL, GALERI_LAIN, PINTUWEB, PAKET, WA_DISPLAY, JENIS, wa } from './components/pintuweb';
 
-const WA = wa('Halo PintuWeb, saya tertarik template link in bio. Boleh minta info?');
+const WA = wa(`Halo PintuWeb, saya tertarik ${JENIS}. Boleh minta info?`);
 const N = templates.length;
 
 const KENAPA = [
@@ -36,9 +38,16 @@ const FAQ_LD = {
 function Logo({ kecil = false }) {
   return (
     <>
-      <span className={`grid shrink-0 place-items-center border-2 bg-ungu text-white ${kecil ? 'h-8 w-8 rounded-lg border-kertas/30' : 'h-9 w-9 rounded-xl border-ink shadow-[3px_3px_0_var(--color-ink)]'}`}>
-        <AtSign size={kecil ? 15 : 18} aria-hidden="true" />
-      </span>
+      {/* Logo pintu asli PintuWeb (367x512, tidak diubah). Di latar gelap diberi alas putih membulat. */}
+      {kecil ? (
+        <span className="grid shrink-0 place-items-center rounded-lg bg-white p-1">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/link-in-bio/images/logo-pintuweb.png" alt="" width="22" height="30" className="h-[30px] w-auto" />
+        </span>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src="/link-in-bio/images/logo-pintuweb.png" alt="" width="23" height="32" className="h-8 w-auto shrink-0" />
+      )}
       <span className="flex flex-col text-left leading-none">
         PintuWeb{' '}
         <span className={`mt-1 font-sans text-[10px] font-bold uppercase tracking-[0.18em] ${kecil ? 'text-kuningx' : 'text-ungu'}`}>Link in Bio</span>
@@ -52,12 +61,13 @@ export default function PortalBio() {
     <div id="top" className="min-h-screen">
       <a href="#konten" className="lewati">Lewati ke konten</a>
       {/* Jejak: portal ini bagian dari PintuWeb */}
-      <nav aria-label="Jejak" className="bg-ink text-xs text-kertas">
-        <ol className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-1.5 sm:px-6 lg:px-8">
-          <li><a href={PINTUWEB} className="font-semibold underline-offset-4 hover:underline">PintuWeb</a></li>
-          <li aria-hidden="true" className="opacity-60">/</li>
-          <li aria-current="page">Link in Bio</li>
-        </ol>
+      <nav aria-label="Jejak" className="relative z-50 bg-ink text-xs text-kertas">
+        <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-1.5 sm:px-6 lg:px-8">
+          <a href={PINTUWEB} className="inline-flex min-h-8 items-center font-semibold underline-offset-4 hover:underline">PintuWeb</a>
+          <span aria-hidden="true" className="opacity-60">/</span>
+          <span aria-current="page">Link in Bio</span>
+          <GaleriLain />
+        </div>
       </nav>
 
       <header className="sticky top-0 z-40 border-b-2 border-ink bg-kertas/90 backdrop-blur-xl">
@@ -71,27 +81,27 @@ export default function PortalBio() {
             <a href="#cara" className="transition hover:text-ungu">Cara Pesan</a>
             <a href="#tanya" className="transition hover:text-ungu">FAQ</a>
           </nav>
-          <a href={WA} target="_blank" rel="noopener noreferrer" className="shrink-0 rounded-full border-2 border-ink bg-kuningx px-4 py-2 text-sm font-bold shadow-[3px_3px_0_var(--color-ink)] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0_var(--color-ink)] sm:px-5">
-            Pesan Template
+          <a href={WA} target="_blank" rel="noopener noreferrer" className="shrink-0 rounded-full border-2 border-ink bg-kuningx px-3 py-2 text-[13px] font-bold sm:text-sm shadow-[3px_3px_0_var(--color-ink)] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0_var(--color-ink)] sm:px-5">
+            Pesan link in bio
           </a>
         </div>
       </header>
 
       <main id="konten" tabIndex={-1}>
         {/* Hero */}
-        <section className="dots-bg relative overflow-hidden px-4 pb-12 pt-10 text-center sm:px-6 sm:pb-14 sm:pt-16">
+        <section id="hero" className="dots-bg relative overflow-hidden px-4 pb-8 pt-7 text-center sm:px-6 sm:pb-14 sm:pt-16">
           <div className="relative mx-auto max-w-4xl">
-            <span className="naik inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)]">
+            <span className="naik hidden items-center gap-2 sm:inline-flex rounded-full border-2 border-ink bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)]">
               ✦ {N} template · {N} kepribadian
             </span>
-            <h1 className="mt-6 font-display text-[2.6rem] font-extrabold leading-[1.05] min-[400px]:text-5xl sm:mt-7 sm:text-6xl md:text-7xl">
+            <h1 className="font-display text-[2rem] font-extrabold leading-[1.05] min-[400px]:text-4xl sm:mt-7 sm:text-6xl md:text-7xl">
               Satu link.<br />Seribu <span className="text-ungu">kepribadian</span><span className="text-kuningx">.</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-base text-mutedx sm:mt-6 sm:text-lg">
+            <p className="mx-auto mt-5 hidden max-w-xl text-base text-mutedx sm:mt-6 sm:block sm:text-lg">
               Bio-mu bukan sekadar daftar tautan. Pilih template yang berbicara seperti kamu — lalu bagikan ke dunia.
             </p>
-            <div className="naik naik-2 mt-8 flex flex-col items-center gap-4 sm:mt-9">
-              <a href="#templates" className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-ungu px-8 py-4 font-display text-sm font-semibold text-white shadow-[4px_4px_0_var(--color-ink)] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0_var(--color-ink)]">
+            <div className="naik naik-2 mt-4 flex flex-col items-center gap-3 sm:mt-9 sm:gap-4">
+              <a href="#templates" className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-ungu px-7 py-3 font-display text-sm font-semibold text-white shadow-[4px_4px_0_var(--color-ink)] sm:px-8 sm:py-4 transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0_var(--color-ink)]">
                 Lihat Koleksi <ArrowDown size={16} aria-hidden="true" />
               </a>
               {/* Ringkasan paket: angka dari PAKET (PintuWeb packages.ts) */}
@@ -102,6 +112,22 @@ export default function PortalBio() {
                 <span className="hidden sm:inline"><span aria-hidden="true" className="mr-2 text-kuningx">✦</span>domain & hosting tahun pertama</span>
               </p>
             </div>
+            {/* Ponsel: strip demo yang bisa digeser; tiap item menaut ke #slug kartunya di katalog */}
+            <nav aria-label="Pintasan demo" className="mt-5 md:hidden">
+              <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 pt-1 text-left [scrollbar-width:none]">
+                {templates.map((t) => (
+                  <li key={t.name} className="w-[76px] shrink-0 snap-start">
+                    <a href={`#${slugOf(t)}`} className="group block">
+                      <span className="phone block overflow-hidden !rounded-[0.9rem] !border-2 !shadow-[3px_3px_0_rgba(25,20,35,0.9)]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={t.potret.replace(/\.webp$/, '-320.webp')} alt="" width="76" height="130" loading="lazy" className="aspect-[76/130] w-full object-cover object-top" />
+                      </span>
+                      <span className="mt-1.5 block truncate text-center font-display text-[11px] font-semibold">{t.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </section>
 
@@ -218,7 +244,7 @@ export default function PortalBio() {
         </section>
       </main>
 
-      <footer className="border-t border-kertas/10 bg-ink px-4 pb-6 pt-10 text-kertas/70 sm:px-6 lg:px-8">
+      <footer id="kaki" className="border-t border-kertas/10 bg-ink px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-10 text-kertas/70 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
           <div className="col-span-2 sm:col-span-1">
             <p className="flex items-center gap-2 font-display text-lg font-extrabold text-kertas"><Logo kecil /></p>
@@ -253,7 +279,15 @@ export default function PortalBio() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-xs font-bold uppercase tracking-widest text-kertas/70">Galeri lain</p>
+          <p className="mt-6 text-xs font-bold uppercase tracking-widest text-kertas/70">Baca juga</p>
+          <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
+            {ARTIKEL.map((a) => (
+              <li key={a.href}>
+                <a href={a.href} className="inline-block py-1 underline decoration-kertas/25 underline-offset-4 transition hover:text-kertas hover:decoration-kuningx">{a.label}</a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-xs font-bold uppercase tracking-widest text-kertas/70">Galeri lain</p>
           <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
             {GALERI_LAIN.map((g) => (
               <li key={g.path}>
@@ -266,6 +300,7 @@ export default function PortalBio() {
           © {new Date().getFullYear()} PintuWeb · Galeri Link in Bio — {N} template, satu kamu.
         </p>
       </footer>
+      <BilahAksi wa={WA} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_LD) }} />
     </div>
   );

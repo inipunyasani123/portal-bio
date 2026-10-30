@@ -82,3 +82,9 @@ main:focus { outline: none; }
   .animate-marquee-x { animation: none !important; }
   .group:hover .phone { transform: none; }
 }
+
+/* Tautan langsung #slug: kartu yang dituju diberi cincin kuning-ungu ±2 detik (bukan kedip) */
+.sorot .phone { box-shadow: 0 0 0 4px var(--color-kuningx), 0 0 0 7px var(--color-ink), 8px 10px 0 rgba(91, 61, 245, 0.45); }
+
+/* Tautan langsung #slug: kartu yang dituju diberi cincin kuning-ink ±2 detik (bukan kedip) */
+.sorot .phone { box-shadow: 0 0 0 4px var(--color-kuningx), 0 0 0 7px var(--color-ink), 8px 10px 0 rgba(91, 61, 245, 0.45); }

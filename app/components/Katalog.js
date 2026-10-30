@@ -1,65 +1,133 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, Utensils, Briefcase, Sparkles, Music, Terminal, LayoutGrid } from 'lucide-react';
 import { templates, slugOf } from './templates-data';
+import { PAKET, waMirip } from './pintuweb';
 
 const KATEGORI = ['Semua', ...new Set(templates.map((t) => t.category))];
-
-/** Ganti saringan dengan View Transition bila peramban mendukung dan pengguna tidak meminta gerak minimal. */
-function useSaringan(awal) {
-  const [nilai, setNilai] = useState(awal);
-  const ganti = (v) => {
-    if (v === nilai) return;
-    const diam = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!document.startViewTransition || diam) return setNilai(v);
-    document.startViewTransition(() => flushSync(() => setNilai(v)));
-  };
-  return [nilai, ganti];
-}
+const USAHA = [
+  { nama: 'Semua', ikon: LayoutGrid },
+  { nama: 'Kuliner', ikon: Utensils },
+  { nama: 'Jasa & Profesional', ikon: Briefcase },
+  { nama: 'Kreator & Personal', ikon: Sparkles },
+  { nama: 'Musik & Hiburan', ikon: Music },
+  { nama: 'Teknologi', ikon: Terminal },
+];
+const SLUGS = templates.map(slugOf);
+const VARIAN = [320, 480, 640];
+// srcset statis untuk <source> potret (varian dibuat scripts/gambar-varian.mjs; sama dengan app/gambar-loader.js)
+const srcSet = (src) => VARIAN.map((w) => `${src.replace(/\.[^.]+$/, `-${w}.webp`)} ${w}w`).join(', ');
+const diam = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export default function Katalog({ kepala }) {
-  const [cat, setCat] = useSaringan('Semua');
-  const list = cat === 'Semua' ? templates : templates.filter((t) => t.category === cat);
+  const [cat, setCatRaw] = useState('Semua');
+  const [usaha, setUsahaRaw] = useState('Semua');
+  const [sorot, setSorot] = useState(null);
+  const timer = useRef(null);
+
+  /** Ganti saringan dengan View Transition bila peramban mendukung dan pengguna tidak meminta gerak minimal. */
+  const ganti = (set, cur) => (v) => {
+    if (v === cur) return;
+    if (!document.startViewTransition || diam()) return set(v);
+    document.startViewTransition(() => flushSync(() => set(v)));
+  };
+  const setCat = ganti(setCatRaw, cat);
+  const setUsaha = ganti(setUsahaRaw, usaha);
+
+  const list = templates.filter((t) => (cat === 'Semua' || t.category === cat) && (usaha === 'Semua' || t.usaha.includes(usaha)));
+
+  /** #slug: setel saringan ke Semua bila perlu, gulir ke kartu (di bawah header lengket), sorot ±2 detik. */
+  const kePilihan = useCallback((slug) => {
+    flushSync(() => { setCatRaw('Semua'); setUsahaRaw('Semua'); });
+    const el = document.getElementById(slug);
+    if (!el) return;
+    el.scrollIntoView({ block: 'start', behavior: diam() ? 'auto' : 'smooth' });
+    el.querySelector('a.tautan-kartu')?.focus({ preventScroll: true });
+    setSorot(slug);
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setSorot(null), 2400);
+  }, []);
+
+  useEffect(() => {
+    const dariHash = () => {
+      const slug = decodeURIComponent(window.location.hash.slice(1));
+      if (SLUGS.includes(slug)) kePilihan(slug);
+    };
+    const klik = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest?.('a[href^="#"]');
+      const slug = a?.getAttribute('href').slice(1);
+      if (!slug || !SLUGS.includes(slug)) return;
+      e.preventDefault();
+      history.pushState(null, '', `#${slug}`);
+      kePilihan(slug);
+    };
+    const t = setTimeout(dariHash, 80);
+    window.addEventListener('hashchange', dariHash);
+    document.addEventListener('click', klik);
+    return () => { clearTimeout(t); clearTimeout(timer.current); window.removeEventListener('hashchange', dariHash); document.removeEventListener('click', klik); };
+  }, [kePilihan]);
+
+  const chip = (aktif) => `min-h-10 shrink-0 rounded-full border-2 border-ink px-4 text-sm font-bold transition ${aktif ? 'bg-ink text-kertas shadow-[3px_3px_0_rgba(91,61,245,0.6)]' : 'bg-white hover:bg-kuningx'}`;
+  const baris = '-mx-4 flex w-[calc(100%+2rem)] min-w-0 gap-2 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0';
+  const label = 'font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-mutedx';
 
   return (
     <>
-      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-5">
-        {kepala}
-        {/* Ponsel: satu baris chip yang bisa digeser (tidak menggeser halaman); layar lebar: membungkus */}
-        <div role="group" aria-label="Saring menurut kategori" className="-mx-4 flex w-[calc(100%+2rem)] min-w-0 gap-2 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0">
-          {KATEGORI.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setCat(c)}
-              aria-pressed={cat === c}
-              className={`min-h-10 shrink-0 rounded-full border-2 border-ink px-4 text-sm font-bold transition ${cat === c ? 'bg-ink text-kertas shadow-[3px_3px_0_rgba(91,61,245,0.6)]' : 'bg-white hover:bg-kuningx'}`}
-            >
-              {c}
-            </button>
-          ))}
+      {kepala}
+      {/* Ponsel: tiap baris chip bisa digeser (tidak menggeser halaman); layar lebar: membungkus */}
+      <div className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-3 sm:gap-4">
+        <div>
+          <p id="lbl-usaha" className={`${label} mb-1.5`}>Untuk usaha apa</p>
+          <div role="group" aria-labelledby="lbl-usaha" className={baris}>
+            {USAHA.map(({ nama, ikon: Ikon }) => (
+              <button key={nama} type="button" onClick={() => setUsaha(nama)} aria-pressed={usaha === nama} className={`${chip(usaha === nama)} inline-flex items-center gap-1.5`}>
+                <Ikon size={15} aria-hidden="true" /> {nama}
+              </button>
+            ))}
+          </div>
         </div>
-        <p className="sr-only" aria-live="polite">{list.length} template ditampilkan</p>
+        <div>
+          <p id="lbl-kat" className={`${label} mb-1.5`}>Jenis</p>
+          <div role="group" aria-labelledby="lbl-kat" className={baris}>
+            {KATEGORI.map((c) => (
+              <button key={c} type="button" onClick={() => setCat(c)} aria-pressed={cat === c} className={chip(cat === c)}>{c}</button>
+            ))}
+          </div>
+        </div>
       </div>
+      <p className="mt-3 text-sm font-semibold text-mutedx" aria-live="polite" role="status">{list.length} dari {templates.length} template ditampilkan</p>
+
+      {list.length === 0 && (
+        <div className="mt-6 rounded-3xl border-2 border-dashed border-ink/40 p-8 text-center">
+          <p className="font-display text-base font-semibold">Belum ada template untuk kombinasi itu.</p>
+          <button type="button" onClick={() => { setCatRaw('Semua'); setUsahaRaw('Semua'); }} className="mt-4 min-h-10 rounded-full border-2 border-ink bg-kuningx px-5 text-sm font-bold">Tampilkan semua</button>
+        </div>
+      )}
 
       {/* Grid ponsel: dua kolom sejak layar ponsel supaya katalog tidak memanjang */}
-      <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:mt-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4 lg:gap-x-8">
+      <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-9 sm:mt-8 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4 lg:gap-x-8">
         {list.map((t) => {
           const slug = slugOf(t);
+          const aktif = sorot === slug;
           return (
-            <li key={t.name} className="group relative flex flex-col" style={{ viewTransitionName: `bio-${slug}` }}>
+            <li key={t.name} id={slug} className={`group relative flex scroll-mt-24 flex-col ${aktif ? 'sorot' : ''}`} style={{ viewTransitionName: `bio-${slug}` }}>
+              {aktif && <span aria-hidden="true" className="stiker-sorot absolute -top-3 start-2 z-20 rotate-[-6deg] rounded-full border-2 border-ink bg-kuningx px-3 py-1 font-display text-[11px] font-semibold shadow-[2px_2px_0_var(--color-ink)]">✦ Ini dia</span>}
               <div className="phone overflow-hidden p-1.5 sm:p-2">
                 <div className="mx-auto mb-1 h-1 w-10 rounded-full bg-white/25 sm:mb-1.5 sm:h-1.5 sm:w-16" aria-hidden="true" />
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.1rem] sm:rounded-[1.35rem]">
-                  <Image
-                    src={t.image}
-                    alt={`Tampilan template ${t.name} di ponsel`}
-                    fill
-                    sizes="(max-width: 639px) 46vw, (max-width: 1023px) 30vw, 280px"
-                    className="object-cover object-top"
-                  />
+                <div className="relative aspect-[3/5] overflow-hidden rounded-[1.1rem] md:aspect-[4/5] sm:rounded-[1.35rem]">
+                  <picture>
+                    <source media="(max-width: 767px)" srcSet={srcSet(t.potret)} sizes="(max-width: 639px) 46vw, 30vw" />
+                    <Image
+                      src={t.image}
+                      alt={`Tampilan template ${t.name} di ponsel`}
+                      fill
+                      sizes="(max-width: 1023px) 30vw, 280px"
+                      className="object-cover object-top"
+                    />
+                  </picture>
                   <span className="absolute right-2 top-2 rounded-full border-2 border-ink bg-kuningx px-2 py-0.5 text-[10px] font-bold sm:right-3 sm:top-3 sm:px-2.5">{t.category}</span>
                 </div>
               </div>
@@ -80,6 +148,11 @@ export default function Katalog({ kepala }) {
                 <a href={t.url} target="_blank" rel="noopener noreferrer" className="tautan-kartu mt-auto inline-flex min-h-6 items-center self-start pt-3 gap-1 text-sm font-bold text-ungu underline-offset-4 after:absolute after:inset-0 after:rounded-[2rem] group-hover:underline sm:pt-4">
                   Lihat demo<span className="sr-only"> {t.name} (tab baru)</span> <ArrowUpRight size={15} aria-hidden="true" />
                 </a>
+                {/* Pesan yang mirip: di atas tautan penutup kartu (z-10) */}
+                <a href={waMirip(t.name, t.url)} target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2.5 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full border-2 border-ink bg-kuningx px-3 text-center text-[12px] font-bold leading-tight shadow-[2px_2px_0_var(--color-ink)] transition hover:translate-x-px hover:translate-y-px hover:shadow-none sm:self-start sm:px-4 sm:text-[13px]">
+                  <MessageCircle size={14} aria-hidden="true" className="shrink-0" /> Pesan yang mirip<span className="sr-only"> dengan {t.name} lewat WhatsApp</span>
+                </a>
+                <p className="mt-1.5 text-[11px] font-semibold text-ink/70">mulai {PAKET.mulai} · {PAKET.waktu}</p>
               </div>
             </li>
           );
