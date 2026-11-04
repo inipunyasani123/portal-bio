@@ -23,6 +23,8 @@ export default function BilahAksi({ wa }) {
   const tampil = heroLewat && !footer;
   return (
     <div
+      role="region"
+      aria-label="Aksi cepat"
       aria-hidden={!tampil}
       className={`fixed inset-x-0 bottom-0 z-40 border-t-2 border-ink bg-kertas/95 px-3 pt-2.5 backdrop-blur md:hidden ${tampil ? 'translate-y-0' : 'invisible translate-y-full'}`}
       style={{ paddingBottom: 'calc(0.625rem + env(safe-area-inset-bottom))', transition: 'transform .25s ease, visibility .25s' }}
